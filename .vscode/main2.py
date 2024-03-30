@@ -1,7 +1,7 @@
 import random
 
-def choose_word():
-    words = ["apple", "banana", "orange", "pencil", "pineapple"]
+def chooseword():
+    words = ["apple", "banana", "orange", "grape", "pineapple"]
     return random.choice(words)
 
 def display_word(word, guessed_letters):
@@ -10,27 +10,27 @@ def display_word(word, guessed_letters):
         if letter in guessed_letters:
             displayed_word += letter
         else:
-            displayed_word += "_"
-    return displayed_word
+            displayed_word += ""
+    return displayedword
 
 def hangman():
     word = choose_word()
     guessed_letters = []
     attempts = 6
 
-    print("Добрый День!")
-    print("Давай")
+    print("Welcome to Hangman!")
+    print("Try to guess the word.")
     print(display_word(word, guessed_letters))
 
     while attempts > 0:
-        guess = input("ББуква: ").lower()
+        guess = input("Enter a letter: ").lower()
 
         if len(guess) != 1 or not guess.isalpha():
-            print("Другую.")
+            print("Please enter a single letter.")
             continue
 
         if guess in guessed_letters:
-            print("Нето.")
+            print("You've already guessed that letter.")
             continue
 
         guessed_letters.append(guess)
@@ -39,17 +39,17 @@ def hangman():
             print("Correct!")
         else:
             attempts -= 1
-            print(f"Неправильно {attempts} Еще попыток.")
-        
+            print(f"Incorrect! You have {attempts} attempts left.")
+
         displayed = display_word(word, guessed_letters)
         print(displayed)
 
-        if "_" not in displayed:
-            print("Ураааа:", word)
+        if "" not in displayed:
+            print("Congratulations! You guessed the word:", word)
             break
 
     if attempts == 0:
-        print("Не угадал:", word)
+        print("Sorry, you ran out of attempts. The word was:", word)
 
-if __name__ == "__main__":
+if name == "main":
     hangman()
