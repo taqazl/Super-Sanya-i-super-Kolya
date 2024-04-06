@@ -1,5 +1,8 @@
 import random
 
+class InvalidInputError(Exception):
+    pass
+
 def choose_word():
     words = ["apple", "banana", "orange", "pencil", "pineapple", "pamella"]
     return random.choice(words)
@@ -23,33 +26,35 @@ def hangman():
     print(display_word(word, guessed_letters))
 
     while attempts > 0:
-        guess = input("ББуква: ").lower()
+        try:
+            guess = input("Буква: ").lower()
 
-        if len(guess) != 1 or not guess.isalpha():
-            print("Другую.")
-            continue
+            if len(guess) != 1 or not guess.isalpha():
+                raise InvalidInputError("Неправильный ввод! Пожалуйста, введите одну букву.")
 
-        if guess in guessed_letters:
-            print("Нето.")
-            continue
+            if guess in guessed_letters:
+                raise InvalidInputError("Вы уже ввели эту букву!")
 
-        guessed_letters.append(guess)
+            guessed_letters.append(guess)
 
-        if guess in word:
-            print("Correct!")
-        else:
-            attempts -= 1
-            print(f"Неправильно {attempts} Еще попыток.")
-        
-        displayed = display_word(word, guessed_letters)
-        print(displayed)
+            if guess in word:
+                print("Правильно!")
+            else:
+                attempts -= 1
+                print(f"Неправильно, осталось попыток: {attempts}")
 
-        if "_" not in displayed:
-            print("Ураааа:", word)
-            break
+            displayed = display_word(word, guessed_letters)
+            print(displayed)
+
+            if "_" not in displayed:
+                print("Поздравляю, вы угадали слово:", word)
+                break
+
+        except InvalidInputError as e:
+            print(e)
 
     if attempts == 0:
-        print("Не угадал:", word)
+        print("К сожалению, вы проиграли. Загаданное слово было:", word)
 
 if __name__ == "__main__":
     hangman()
