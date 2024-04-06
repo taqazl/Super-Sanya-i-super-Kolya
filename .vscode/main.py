@@ -1,7 +1,7 @@
 import random
 
 def choose_word():
-    words = ["apple", "banana", "orange", "pencil", "pineapple"]
+    words = ["apple", "banana", "orange", "pencil", "pineapple", "pamella"]
     return random.choice(words)
 
 def display_word(word, guessed_letters):
